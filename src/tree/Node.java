@@ -29,14 +29,49 @@ public class Node<T> {
     
     public void setFirst(T in) {first = in;}
     public void setSecond(T in) {second = in;}
-    public void setLeft(Node in) {left = in;}
-    public void setCenter(Node in) {center = in;}
-    public void setRight(Node in) {right = in;}
-    public void setParent(Node in) {parent = in;}
+    public void setLeft(Node<T> in) {left = in;}
+    public void setCenter(Node<T> in) {center = in;}
+    public void setRight(Node<T> in) {right = in;}
+    public void setParent(Node<T> in) {parent = in;}
     
     
     public Node(T in) {
         first = in;
+    }
+    
+    public boolean isThreeNode() {
+        return second != null;
+    }
+    
+    public boolean equals(Node<T> n) {
+        
+        // Checks to see if parent is the same node
+        if (getParent() != n.getParent()) return false;
+        
+        // Checks if contents are both null or both not null
+        if (getFirst() != null && n.getFirst() == null ||
+                getFirst() == null && n.getFirst() != null) {
+            return false;
+        }
+        if (getSecond() != null && n.getSecond() == null ||
+                getSecond() == null && n.getSecond() != null) {
+            return false;
+        }
+        
+        // Compares contents
+        if (getFirst() != null) {
+            T mine = getFirst();
+            T other = n.getFirst();
+            if (((Comparable)mine).compareTo(other) != 0) return false;
+            
+        }
+        if (getSecond() != null) {
+            T mine = getSecond();
+            T other = n.getSecond();
+            if (((Comparable)mine).compareTo(other) != 0) return false;
+        }
+        
+        return true;
     }
     
 }

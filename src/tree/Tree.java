@@ -18,13 +18,30 @@ public class Tree<T> {
         
     }
     
-    public void insert(T in) {
-        insert(in, root);
+    public Node find(T in) {
+        Node n = root;
+        while (n.getFirst() != null && 
+                ((Comparable)in).compareTo(n.getFirst()) != 0) {
+            
+            if (((Comparable)in).compareTo(n.getFirst()) < 0) {
+                n = n.getLeft();
+            } else {
+                n = n.getRight();
+            }
+        
+        }
+        if (n.getFirst() == null) return null;
+        return n;
     }
     
-    public void insert(T in, Node s) {
+    public void insert(T in) {
+        insert(in, root, null);
+    }
+    
+    public void insert(T in, Node s, Node p) {
         if (s.getFirst() == null) {
             s.setFirst(in);
+            s.setParent(p);
             Node left = new Node(null);
             Node right = new Node(null);
             s.setLeft(left);
@@ -33,17 +50,27 @@ public class Tree<T> {
             right.setParent(s);
         } else {
             if (((Comparable)in).compareTo(s.getFirst()) < 0) {
-                insert(in, s.getLeft());
+                insert(in, s.getLeft(), s);
             } else if (((Comparable)in).compareTo(s.getFirst()) > 0) {
-                insert(in, s.getRight());
+                insert(in, s.getRight(), s);
             } else {
                 // Error: node already in tree
             }
         }
     }
     
+    // TODO finish this method
     public void remove(T in) {
-        
+        Node n = find(in);
+        if (n == null) return;
+        Node p = n.getParent();
+        Node l = n.getLeft();
+        Node r = n.getRight();
+        if (p == null) {    // root node
+            root = l;
+        } else {
+            
+        }
     }
     
     public static void main(String[] args) {
