@@ -69,7 +69,20 @@ public class Tree<T> {
         if (p == null) {    // root node
             root = l;
         } else {
-            
+            // Connect nodes beneath n to parent node
+            /*
+            Left node deleted:
+            go one left
+            go all the way to the right
+            last node to the right is the one to replace
+            just hoist up any tree connected to it to previously
+            occupied spot
+            */
+            if (n.compareTo(p) < 0) {   // n is left of parent
+                
+            } else {    // node is right of parent
+                
+            }
         }
     }
     

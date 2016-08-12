@@ -43,6 +43,17 @@ public class Node<T> {
         return second != null;
     }
     
+    public int compareTo(Node<T> n) {
+        if (((Comparable)getFirst()).compareTo(n.getFirst()) < 0) return -1;
+        if (((Comparable)getFirst()).compareTo(n.getFirst()) == 0) return 0;
+        if (n.getSecond() != null) {
+            if (((Comparable)getFirst()).compareTo(n.getSecond()) == 0) return 0;
+            if (((Comparable)getFirst()).compareTo(n.getFirst()) > 0 &&
+                    ((Comparable)getFirst()).compareTo(n.getSecond()) < 0) return 0;
+        }
+        return 1;
+    }
+    
     public boolean equals(Node<T> n) {
         
         // Checks to see if parent is the same node
