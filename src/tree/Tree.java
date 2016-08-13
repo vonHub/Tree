@@ -6,6 +6,8 @@
 
 package tree;
 
+import java.util.Random;
+
 /**
  *
  * @author Christopher
@@ -13,6 +15,7 @@ package tree;
 public class Tree<T> {
 
     Node root = new Node(null);
+    static Random randy = new Random();
     
     public Tree() {
         
@@ -83,6 +86,28 @@ public class Tree<T> {
             } else {    // node is right of parent
                 
             }
+        }
+    }
+    
+    /**
+     * @param n node with null contents
+    */
+    public void rebalanceTree(Node<T> n) {
+        Node l = n.getLeft();
+        Node r = n.getRight();
+        if (l == null && r == null) return;
+        if (l == null || randy.nextBoolean()) {
+            n.setFirst((T)(r.getFirst()));
+            n.setSecond((T)(r.getSecond()));
+            r.setFirst(null);
+            r.setSecond(null);
+            rebalanceTree(r);
+        } else {
+            n.setFirst((T)(l.getFirst()));
+            n.setSecond((T)(l.getSecond()));
+            l.setFirst(null);
+            l.setSecond(null);
+            rebalanceTree(l);
         }
     }
     
