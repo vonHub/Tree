@@ -6,11 +6,12 @@
 
 package tree;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
  *
- * @author Christopher
+ * @author Christopher Von Hoene
  */
 public class Tree<T> {
 
@@ -66,27 +67,8 @@ public class Tree<T> {
     public void remove(T in) {
         Node n = find(in);
         if (n == null) return;
-        Node p = n.getParent();
-        Node l = n.getLeft();
-        Node r = n.getRight();
-        if (p == null) {    // root node
-            root = l;
-        } else {
-            // Connect nodes beneath n to parent node
-            /*
-            Left node deleted:
-            go one left
-            go all the way to the right
-            last node to the right is the one to replace
-            just hoist up any tree connected to it to previously
-            occupied spot
-            */
-            if (n.compareTo(p) < 0) {   // n is left of parent
-                
-            } else {    // node is right of parent
-                
-            }
-        }
+        n.setFirst(null);
+        rebalanceTree(n);
     }
     
     /**
@@ -111,12 +93,38 @@ public class Tree<T> {
         }
     }
     
+    public ArrayList<Node> getChildren(ArrayList<Node> a) {
+        ArrayList<Node> children = new ArrayList();
+        for (Node n: a) {
+            Node l = n.getLeft();
+            Node c = n.getCenter();
+            Node r = n.getRight();
+            if (l != null && !l.isEmpty() && !children.contains(l)) {
+                children.add(l);
+            }
+            if (c != null && !c.isEmpty() && !children.contains(c)) {
+                children.add(c);
+            }
+            if (r != null && !r.isEmpty() && !children.contains(r)) {
+                children.add(r);
+            }
+        }
+        return children;
+    }
+    
+    public void print() {
+        
+    }
+    
     public static void main(String[] args) {
         // TODO code application logic here
         Tree<Integer> t = new Tree();
         t.insert(3);
         t.insert(5);
         t.insert(1);
+        t.remove(5);
+        t.insert(2);
+        t.remove(2);
     }
     
 }

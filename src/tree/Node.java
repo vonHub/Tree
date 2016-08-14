@@ -43,6 +43,10 @@ public class Node<T> {
         return second != null;
     }
     
+    public boolean isEmpty() {
+        return first == null;
+    }
+    
     public int compareTo(Node<T> n) {
         if (((Comparable)getFirst()).compareTo(n.getFirst()) < 0) return -1;
         if (((Comparable)getFirst()).compareTo(n.getFirst()) == 0) return 0;
