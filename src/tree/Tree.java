@@ -12,7 +12,6 @@ import java.util.Random;
 /**
  *
  * @author Christopher Von Hoene
- * Comment to check if commit email works now
  */
 public class Tree<T> {
 
