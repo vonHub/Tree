@@ -38,6 +38,12 @@ public class Tree<T> {
         return n;
     }
     
+    public void insert(T[] in) {
+        for (T item: in) {
+            insert(item);
+        }
+    }
+    
     public void insert(T in) {
         insert(in, root, null);
     }
@@ -63,7 +69,12 @@ public class Tree<T> {
         }
     }
     
-    // TODO finish this method
+    public void remove(T[] in) {
+        for (T item: in) {
+            remove(item);
+        }
+    }
+    
     public void remove(T in) {
         Node n = find(in);
         if (n == null) return;
@@ -79,12 +90,18 @@ public class Tree<T> {
         Node r = n.getRight();
         if (l == null && r == null) return;
         if (l == null || randy.nextBoolean()) {
+            if (r.isEmpty()) {  // Dead leaf--only one layer of these
+                n.setRight(null);
+            }
             n.setFirst((T)(r.getFirst()));
-            n.setSecond((T)(r.getSecond()));
+            n.setSecond((T)(r.getSecond()));            
             r.setFirst(null);
             r.setSecond(null);
             rebalanceTree(r);
         } else {
+            if (l.isEmpty()) {  // Dead leaf--only one layer of these
+                n.setLeft(null);
+            }
             n.setFirst((T)(l.getFirst()));
             n.setSecond((T)(l.getSecond()));
             l.setFirst(null);
@@ -113,18 +130,27 @@ public class Tree<T> {
     }
     
     public void print() {
-        
+        ArrayList<Node> layer = new ArrayList();
+        layer.add(root);
+        while (!layer.isEmpty()) {
+            for (Node n: layer) {
+                if (n.getFirst() != null) {
+                    System.out.print(n.getFirst() + " ");
+                }
+            }
+            System.out.println();
+            layer = getChildren(layer);
+        }
     }
     
     public static void main(String[] args) {
-        // TODO code application logic here
         Tree<Integer> t = new Tree();
-        t.insert(3);
-        t.insert(5);
-        t.insert(1);
-        t.remove(5);
-        t.insert(2);
-        t.remove(2);
+        Integer[] items = {3, 1, 2, 0, 5, 4, 6};
+        t.insert(items);
+        Integer[] removed = {2, 4};
+        t.remove(removed);
+        t.insert(13);
+        t.print();
     }
     
 }
