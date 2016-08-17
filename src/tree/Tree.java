@@ -59,12 +59,26 @@ public class Tree<T> {
             left.setParent(s);
             right.setParent(s);
         } else {
-            if (((Comparable)in).compareTo(s.getFirst()) < 0) {
+            int first = ((Comparable)in).compareTo(s.getFirst());
+            if (first < 0) {
                 insert(in, s.getLeft(), s);
-            } else if (((Comparable)in).compareTo(s.getFirst()) > 0) {
-                insert(in, s.getRight(), s);
             } else {
-                // Error: node already in tree
+                if (s.isThreeNode()) {
+                    int second = ((Comparable)in).compareTo(s.getSecond());
+                    if (first > 0 && second < 0) {
+                        insert(in, s.getCenter(), s);
+                    } else if (first > 0 && second > 0) {
+                        insert(in, s.getRight(), s);
+                    } else {
+                        // Error, value is already in tree
+                    }
+                } else {
+                    if (first > 0) {
+                        insert(in, s.getRight(), s);
+                    } else {
+                        // Error, value is already in tree
+                    }
+                }
             }
         }
     }
@@ -116,13 +130,13 @@ public class Tree<T> {
             Node l = n.getLeft();
             Node c = n.getCenter();
             Node r = n.getRight();
-            if (l != null && !l.isEmpty() && !children.contains(l)) {
+            if (l != null && !children.contains(l)) {
                 children.add(l);
             }
-            if (c != null && !c.isEmpty() && !children.contains(c)) {
+            if (c != null && !children.contains(c)) {
                 children.add(c);
             }
-            if (r != null && !r.isEmpty() && !children.contains(r)) {
+            if (r != null && !children.contains(r)) {
                 children.add(r);
             }
         }
@@ -136,6 +150,8 @@ public class Tree<T> {
             for (Node n: layer) {
                 if (n.getFirst() != null) {
                     System.out.print(n.getFirst() + " ");
+                } else {
+                    System.out.print("* ");
                 }
             }
             System.out.println();

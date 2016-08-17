@@ -34,9 +34,17 @@ public class Node<T> {
     public void setRight(Node<T> in) {right = in;}
     public void setParent(Node<T> in) {parent = in;}
     
+    public Node() {
+        // Everything is null
+    }
     
     public Node(T in) {
         first = in;
+    }
+    
+    public Node(T f, T s) {
+        first = f;
+        second = s;
     }
     
     public boolean isThreeNode() {
@@ -53,9 +61,23 @@ public class Node<T> {
         if (n.getSecond() != null) {
             if (((Comparable)getFirst()).compareTo(n.getSecond()) == 0) return 0;
             if (((Comparable)getFirst()).compareTo(n.getFirst()) > 0 &&
-                    ((Comparable)getFirst()).compareTo(n.getSecond()) < 0) return 0;
+                ((Comparable)getFirst()).compareTo(n.getSecond()) < 0) return 0;
         }
         return 1;
+    }
+    
+    public int compareTo(T in) {
+        int f = ((Comparable)getFirst()).compareTo(in);
+        if (f == 0) return 0;
+        if (f > 0) return -1;
+        if (getSecond() == null) {
+            return -1;
+        } else {
+            int s = ((Comparable)getSecond()).compareTo(in);
+            if (s == 0) return 0;
+            if (f < 0 && s > 0) return 0;
+            return 1;
+        }
     }
     
     public boolean equals(Node<T> n) {
