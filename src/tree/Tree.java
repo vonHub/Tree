@@ -49,15 +49,22 @@ public class Tree<T> {
     }
     
     public void insert(T in, Node s, Node p) {
-        if (s.getFirst() == null) {
+        if (s.isEmpty()) {  // Tree is empty, s is root node
             s.setFirst(in);
-            s.setParent(p);
-            Node left = new Node(null);
-            Node right = new Node(null);
-            s.setLeft(left);
-            s.setRight(right);
-            left.setParent(s);
-            right.setParent(s);
+        } else if (s.getLeft() == null && s.getRight() == null) {   // Leaf found
+            if (!s.isThreeNode()) {
+                if (((Comparable)in).compareTo(s.getFirst()) > 0) {
+                    s.setSecond(in);
+                } else if (((Comparable)in).compareTo(s.getFirst()) < 0) {
+                    T temp = (T)s.getFirst();
+                    s.setFirst(in);
+                    s.setSecond(temp);
+                } else {
+                    // Error, value already in tree
+                }
+            } else {
+                
+            }
         } else {
             int first = ((Comparable)in).compareTo(s.getFirst());
             if (first < 0) {
@@ -94,6 +101,15 @@ public class Tree<T> {
         if (n == null) return;
         n.setFirst(null);
         rebalanceTree(n);
+    }
+    
+    /**
+     * 
+     * @param n node being considered for insertion
+     * @param in value bubbled up from lower node
+     */
+    public void rebalanceTree(Node<T> n, T in) {
+        
     }
     
     /**

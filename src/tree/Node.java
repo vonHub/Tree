@@ -66,6 +66,14 @@ public class Node<T> {
         return 1;
     }
     
+    public boolean contains(T in) {
+        if (getFirst() == null) return false;
+        if (((Comparable)getFirst()).compareTo(in) == 0) return true;
+        if (getSecond() == null) return false;
+        if (((Comparable)getSecond()).compareTo(in) == 0) return true;
+        return false;
+    }
+    
     public int compareTo(T in) {
         int f = ((Comparable)getFirst()).compareTo(in);
         if (f == 0) return 0;
